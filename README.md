@@ -3,10 +3,10 @@ Google Chrome tab manager that brings workspaces
 
 
 TODO:
- - Use Gulp
- - Use Bowler
- - Use Yeoman
+* Use Gulp
+* Use Bowler
+* Use Yeoman
 
- - Explore
- 	- Travis
- 	- Coveralls
+* Explore
+  * Travis
+ 	* Coveralls
