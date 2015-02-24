@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ChromeWorkspaces">
+<html ng-app="ChromeWorkspaces" ng-csp>
 <head>
   <base target="_blank">
   <title>Chrome Workspaces Title</title>
@@ -8,17 +8,29 @@
 <body ng-controller="WorkspaceCtrl">
 
 <section id="main">
-  <nav>
-    <h2>Chrome Workspaces</h2>
-  </nav>
+
+  <span ng-if="isSaved">
+      Saved
+  </span>
+  <span ng-if="!isSaved">
+      Not saved
+      <button ng-click="save()">save</button>
+  </span>
+
   <ul>
     <li ng-repeat="ws in workspaces">
       {{ws.name}}
+      <ul>
+        <li ng-repeat="tab in ws.tabs">
+          {{tab.title}}
+        </li>
+      </ul>
     </li>
   </ul>
+
 </section>
 
-<script src="js/angular.min.js"></script>
+<script src="js/vendor/angular.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
