@@ -6,7 +6,13 @@ angular.module('ChromeWorkspaces', [])
 	var currentWSId = -1;
 
 	function doOpenTabsBelongToSavedWS() {
-
+		chrome.tabs.query({currentWindow: true}, function(tabs) {
+			$rootScope.$apply(function() {
+				ws.tabs = tabs;
+				_.indexOf(workspaces, ws);
+				workspaces.push(ws);
+			});
+		});
 	}
 
 
