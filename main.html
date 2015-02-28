@@ -10,11 +10,12 @@
 <section id="main">
 
   <span ng-if="isSaved">
-      Saved
+    Current: <b>{{ws.name}}</b>
   </span>
+
   <span ng-if="!isSaved">
-      Not saved
-      <button ng-click="save()">save</button>
+    <input type="text" ng-model="ws.name" placeholder="New WS name">
+    <button ng-click="save()">save</button>
   </span>
 
   <ul>

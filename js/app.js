@@ -1,20 +1,34 @@
 angular.module('ChromeWorkspaces', [])
 
-.factory('wsFactory', function() {
+.factory('wsFactory', function($rootScope) {
 
 	var workspaces = [];
+	var currentWSId = -1;
+
+	function doOpenTabsBelongToSavedWS() {
+
+	}
+
 
 	return {
-		get: function get () {
+		getAll: function getAll() {
 			return workspaces;
 		},
-		add: function add (name) {
+		getCurrent: function getCurrent() {
+			if (currentWSId == -1) {
+				return {};
+			}
+			return workspaces[currentWSId];
+		},
+		add: function add (wsName) {
 			var ws = {};
 
-			ws.name = name;
+			ws.name = wsName;
 			chrome.tabs.query({currentWindow: true}, function(tabs) {
-				ws.tabs = tabs;
-				workspaces.push(ws);
+				$rootScope.$apply(function() {
+					ws.tabs = tabs;
+					workspaces.push(ws);
+				});
 			});
 
 			console.log(ws);
@@ -26,11 +40,12 @@ angular.module('ChromeWorkspaces', [])
 
 .controller('WorkspaceCtrl', ['$scope', 'wsFactory', function($scope, wsFactory) {
 	$scope.isSaved = false;
-	$scope.workspaces = wsFactory.get();
+	$scope.workspaces = wsFactory.getAll();
+	$scope.ws = wsFactory.getCurrent();
 
 	$scope.save = function() {
-		// $scope.isSaved = true;
-		wsFactory.add('a workspace');
+		$scope.isSaved = true;
+		wsFactory.add($scope.ws.name);
 	};
 
 }]);
